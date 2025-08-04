@@ -1,7 +1,7 @@
-package com.userName.application.security;
+package com.userName.application.configuration.security;
 
-import com.userName.application.security.filters.JwtAuthenticationFilter;
-import com.userName.application.security.filters.JwtAuthorizationFilter;
+import com.userName.application.configuration.security.filters.JwtAuthenticationFilter;
+import com.userName.application.configuration.security.filters.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +42,7 @@ public class SecurityConfig {
     public JwtAuthenticationFilter getJWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         final JwtAuthenticationFilter filter = new JwtAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager);
-        filter.setFilterProcessesUrl("/login");
+        filter.setFilterProcessesUrl("api/v1/auth/login");
         return filter;
     }
 
