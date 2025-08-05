@@ -1,6 +1,6 @@
-package com.userName.application.security.filters;
+package com.userName.application.configuration.security.filters;
 
-import com.userName.application.security.jwt.JwtUtils;
+import com.userName.application.utilities.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

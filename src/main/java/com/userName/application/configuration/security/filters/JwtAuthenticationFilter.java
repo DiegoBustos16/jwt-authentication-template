@@ -1,8 +1,8 @@
-package com.userName.application.security.filters;
+package com.userName.application.configuration.security.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.userName.application.model.UserEntity;
-import com.userName.application.security.jwt.JwtUtils;
+import com.userName.application.model.UserIdentity.UserIdentity;
+import com.userName.application.utilities.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,17 +23,17 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        UserEntity userEntity = null;
+        UserIdentity userIdentity = null;
         String username = "";
         String password = "";
         try {
-            userEntity = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
-            username = userEntity.getUsername();
-            password = userEntity.getPassword();
+            userIdentity = new ObjectMapper().readValue(request.getInputStream(), UserIdentity.class);
+            username = userIdentity.getUsername();
+            password = userIdentity.getPassword();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
