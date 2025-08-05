@@ -23,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
