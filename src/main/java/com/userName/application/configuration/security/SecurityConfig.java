@@ -2,6 +2,8 @@ package com.userName.application.configuration.security;
 
 import com.userName.application.configuration.security.filters.JwtAuthenticationFilter;
 import com.userName.application.configuration.security.filters.JwtAuthorizationFilter;
+import com.userName.application.configuration.security.handlers.JwtAccessDeniedHandler;
+import com.userName.application.configuration.security.handlers.JwtAuthenticationEntryPoint;
 import com.userName.application.utilities.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +26,8 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final JwtUtils jwtUtils;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
@@ -35,6 +39,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                         )
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // <-- 401 handler
+                        .accessDeniedHandler(jwtAccessDeniedHandler)           // <-- 403 handler
+                )
                 .addFilter(getJWTAuthenticationFilter(authenticationManager))
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
