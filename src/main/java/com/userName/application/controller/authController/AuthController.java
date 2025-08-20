@@ -3,7 +3,7 @@ package com.userName.application.controller.authController;
 import com.userName.application.model.UserIdentity.dto.req.RegisterRequestDto;
 import com.userName.application.model.UserIdentity.dto.res.RegisterResponseDto;
 import com.userName.application.orchestrator.userIdentity.UserIdentityOrchestrator;
-import com.userName.application.service.userIdentity.UserIdentityService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ public class AuthController {
     private final UserIdentityOrchestrator userIdentityOrchestrator;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register( @RequestBody RegisterRequestDto request) {
+    public ResponseEntity<RegisterResponseDto> register( @Valid @RequestBody RegisterRequestDto request) {
         return ResponseEntity.ok(userIdentityOrchestrator.registerUserIdentity(request));
     }
 }
